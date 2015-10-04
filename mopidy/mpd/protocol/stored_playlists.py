@@ -155,7 +155,7 @@ def playlistadd(context, name, track_uri):
         # Create new playlist with this single track
         lookup_res = context.core.library.lookup(uris=[track_uri]).get()
         tracks = [a for sl in lookup_res.values() for a in sl]
-        _playlistcreate(context, name, tracks)
+        _createplaylist(context, name, tracks)
     else:
         # Add track to existing playlist
         uri_scheme = urlparse.urlparse(track_uri).scheme
@@ -168,7 +168,7 @@ def playlistadd(context, name, track_uri):
                 playlist_scheme, uri_scheme)
 
 
-def _playlistcreate(context, name, tracks):
+def _createplaylist(context, name, tracks):
     """
     Creates new playlist using backend aprropriate for passed list of tracks
     """
@@ -330,7 +330,7 @@ def save(context, name):
     playlist = uri is not None and context.core.playlists.lookup(uri).get()
     if not playlist:
         # Create new playlist
-        _playlistcreate(context, name, tracks)
+        _createplaylist(context, name, tracks)
     else:
         # Overwrite existing playlist
         playlist = playlist.replace(tracks=tracks)
