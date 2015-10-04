@@ -170,7 +170,7 @@ def playlistadd(context, name, track_uri):
 
 def _createplaylist(context, name, tracks):
     """
-    Creates new playlist using backend aprropriate for passed list of tracks
+    Creates new playlist using backend appropriate for the given tracks
     """
     uri_schemes = set([urlparse.urlparse(t.uri).scheme for t in tracks])
     for scheme in uri_schemes:
@@ -185,11 +185,11 @@ def _createplaylist(context, name, tracks):
             continue
         # Created and saved
         return
-    # Can't use backend aprropriate to passed uri schemes, use default one
+    # Can't use backend appropriate for passed URI schemes, use default one
     scheme = context.dispatcher.config['mpd']['default_playlist_scheme']
     playlist = context.core.playlists.create(name, scheme).get()
     if not playlist:
-        # If even default backend can't save playlist, everything is lost
+        # If even MPD's default playlist backend can't save playlist, everything is lost
         logger.warning('Default backend can\'t create playlists')
         raise exceptions.MpdFailedToSavePlaylist(None)
     playlist = playlist.replace(tracks=tracks)
@@ -207,7 +207,7 @@ def playlistclear(context, name):
 
         Clears the playlist ``NAME.m3u``.
 
-        ``NAME.m3u`` will be created if it does not exist.
+    ``NAME.m3u`` will be created if it does not exist.
     """
     uri = context.lookup_playlist_uri_from_name(name)
     playlist = uri is not None and context.core.playlists.lookup(uri).get()
