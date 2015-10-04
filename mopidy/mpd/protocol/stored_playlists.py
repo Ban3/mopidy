@@ -190,7 +190,7 @@ def _createplaylist(context, name, tracks):
     playlist = context.core.playlists.create(name, scheme).get()
     if not playlist:
         # If even MPD's default playlist backend can't save playlist, everything is lost
-        logger.warning('Default backend can\'t create playlists')
+        logger.warning("Default backend can't create playlists")
         raise exceptions.MpdFailedToSavePlaylist(None)
     playlist = playlist.replace(tracks=tracks)
     if context.core.playlists.save(playlist).get() is None:
