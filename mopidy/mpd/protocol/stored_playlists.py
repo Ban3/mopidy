@@ -186,7 +186,7 @@ def _createplaylist(context, name, tracks):
         # Created and saved
         return
     # Can't use backend appropriate for passed URI schemes, use default one
-    scheme = context.dispatcher.config['mpd']['default_playlist_scheme']
+    default_scheme = context.dispatcher.config['mpd']['default_playlist_scheme']
     playlist = context.core.playlists.create(name, scheme).get()
     if not playlist:
         # If even MPD's default playlist backend can't save playlist, everything is lost
